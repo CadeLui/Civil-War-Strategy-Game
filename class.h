@@ -90,51 +90,58 @@ class Unit
 	private:
 		int health = 2;
 		bool artillery;
-		string team;
+		std::string team;
+		char symbol;
 	public:
-		Unit(bool art, string t)
+		Unit(bool art, std::string t, char s)
 		{
 			team = t;
 			artillery = art;
+			symbol = s;
 		}
 		bool isArtillery() { return artillery; }
+		char getSymbol() { return symbol; }
 };
 
 class MapClass
 {
 	private:
-		std::vector<std::vector<char>> map;
+		std::vector<std::vector<char>> graphicMap;
+		std::vector<std::vector<Unit*>> entityMap;
 	public:
 		MapClass()
 		{
-			map.resize(21);
-			for (int i=0; i<map.size(); i++) map[i].resize(21);
+			graphicMap.resize(21);
+			for (int i=0; i<graphicMap.size(); i++) graphicMap[i].resize(21);
+
+			entityMap.resize(21);
+			for (int i=0; i<entityMap.size(); i++) entityMap[i].resize(21);
 		}
 		void draw()
 		{
 			for (int i2=0; i2<85; i2++) std::cout << "-";
 			std::cout << "\n";
-			for (int i=0; i<map.size(); i++)
+			for (int i=0; i<graphicMap.size(); i++)
 			{
 				std::cout << "| ";
-				for (int i2=0; i2<map[i].size(); i2++)
+				for (int i2=0; i2<graphicMap[i].size(); i2++)
 				{
-					std::cout << map[i][i2] << " | ";
+					std::cout << graphicMap[i][i2] << " | ";
 				}
 				std::cout << "\n";
 				for (int i2=0; i2<85; i2++) std::cout << "-";
 				std::cout << "\n";
 			}
 		}
-		void fill()
+		void place(int x, int y, Unit *entity)
 		{
-			for (int i=1; i<map.size(); i++)
-			{
-				for (int i2=1; i2<map[i].size(); i2++)
-				{
-					map[i][i2] = '#';
-				}
-			}
+			entityMap[x][y] = entity;
+			graphicMap[x][y] = entity->getSymbol();
+		}
+		void remove(int x, int y)
+		{
+			entityMap[x][y] = NULL;
+			graphicMap[x][y] = ' ';
 		}
 };
 #endif
