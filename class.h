@@ -4,7 +4,7 @@
 /*
 Header for Civil War Strategy Game by Cade Luinenburg
 Created February 10th, 2020
-Last updated February 11th, 2020
+Last updated February 12th, 2020
 */
 
 #include <string>
@@ -12,6 +12,10 @@ Last updated February 11th, 2020
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
+class General;
+class Unit;
+class MapClass;
 
 class General
 {
@@ -31,76 +35,29 @@ class General
 			artilleryAccuracy = aA;
 			organization = o;
 		}
-		void modEffect(int effect, int modification)
-		{
-			switch (effect)
-			{
-				case 0:
-					moral += modification;
-					if (moral > 20) moral = 20;
-					break;
-
-				case 1:
-					soldierAccuracy += modification;
-					if (soldierAccuracy > 9) soldierAccuracy = 9;
-					break;
-
-				case 2:
-					artilleryAccuracy += modification;
-					if (artilleryAccuracy > 8) artilleryAccuracy = 8;
-					break;
-
-				case 3:
-					if (modification == 1) organization = true;
-					else organization = false;
-					break;
-			}
-		}
-};
-
-class Card
-{
-	private:
-		std::string question, answer;
-		int stat, effect;
-
-	public:
-		Card(std::string q, std::string a, int s, int e)
-		{
-			question = q;
-			answer = a;
-			stat = s;
-			effect = e;
-		}
-		void answerCard(std::string givenAnswer, General *player)
-		{
-			if (givenAnswer == answer)
-			{
-				player->modEffect(stat, effect);
-			}
-			else
-			{
-				player->modEffect(stat, -effect);
-			}
-		}
 };
 
 class Unit
 {
 	private:
 		int health = 2;
-		bool artillery;
 		std::string team;
 		char symbol;
 	public:
-		Unit(bool art, std::string t, char s)
+		Unit(std::string t, char s)
 		{
 			team = t;
-			artillery = art;
 			symbol = s;
 		}
-		bool isArtillery() { return artillery; }
-		char getSymbol() { return symbol; }
+		char getSymbol() { return (symbol); }
+		bool isDead() { return (health <= 0); }
+		int currentHealth() { return (health); }
+		bool damage(int x)
+		{ 
+			if (x < 1) return false;
+			health -= x;
+			return (isDead());
+		}
 };
 
 class MapClass
@@ -109,27 +66,41 @@ class MapClass
 		std::vector<std::vector<char>> graphicMap;
 		std::vector<std::vector<Unit*>> entityMap;
 	public:
-		MapClass()
+		MapClass(int size)
 		{
-			graphicMap.resize(21);
-			for (int i=0; i<graphicMap.size(); i++) graphicMap[i].resize(21);
+			graphicMap.resize(size);
+			for (int i=0; i<graphicMap.size(); i++) 
+				graphicMap[i].resize(graphicMap.size());
 
-			entityMap.resize(21);
-			for (int i=0; i<entityMap.size(); i++) entityMap[i].resize(21);
+			entityMap.resize(graphicMap.size());
+			for (int i=0; i<entityMap.size(); i++) 
+				entityMap[i].resize(graphicMap.size());
+
+			for (int i=0; i<graphicMap.size(); i++) 
+				for (int i2=0; i2<graphicMap.size(); i2++) 
+					graphicMap[i][i2] = ' ';
+			for (int i=0; i<graphicMap.size(); i++) 
+			{
+				graphicMap[i][0] = i+47; 
+				graphicMap[0][i] = i+47;
+			}
+			graphicMap[0][0] = '/';
 		}
 		void draw()
 		{
-			for (int i2=0; i2<85; i2++) std::cout << "-";
+			for (int i2=0; i2<(graphicMap.size()*2)+5; i2++)
+				std::cout << "-";
 			std::cout << "\n";
 			for (int i=0; i<graphicMap.size(); i++)
 			{
 				std::cout << "| ";
 				for (int i2=0; i2<graphicMap[i].size(); i2++)
-				{
 					std::cout << graphicMap[i][i2] << " | ";
-				}
+
 				std::cout << "\n";
-				for (int i2=0; i2<85; i2++) std::cout << "-";
+
+				for (int i2=0; i2<(graphicMap.size()*4)+1; i2++)
+					std::cout << "-";
 				std::cout << "\n";
 			}
 		}
@@ -143,5 +114,6 @@ class MapClass
 			entityMap[x][y] = NULL;
 			graphicMap[x][y] = ' ';
 		}
+		Unit* returnEntity(int x, int y) { return entityMap[x][y]; }
 };
 #endif
