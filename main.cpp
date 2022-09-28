@@ -1,4 +1,6 @@
-#include "class.h"
+#include "Unit.h"
+#include "MapClass.h"
+#include "General.h"
 
 /*
 Civil War Strategy Game by Cade Luinenburg
