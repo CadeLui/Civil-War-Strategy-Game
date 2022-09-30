@@ -9,14 +9,11 @@ Civil War Strategy Game by Cade Luinenburg
 Created February 10th, 2020
 */
 
-/*
-	Map
-*/
-
-ObjectMatrix doesThisWork = ObjectMatrix(10, 10);
+ObjectMatrix doesThisWork(10, 10);
 
 int main(int argc, char *argv[])
 {
-	srand(time(NULL));
+	//srand(time(NULL));
+	std::cout << doesThisWork.toString() << "\n";
 	return 0;
 }
