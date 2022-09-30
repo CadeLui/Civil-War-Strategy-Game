@@ -7,14 +7,14 @@ class Unit
 	private:
 		int health = 2;
 		std::string team;
-		char symbol;
+		std::string symbol;
 	public:
-		Unit(std::string t, char s)
+		Unit(std::string t, std::string s)
 		{
 			team = t;
 			symbol = s;
 		}
-		char getSymbol() { return (symbol); }
+		std::string getSymbol() { return (symbol); }
 		bool isDead() { return (health <= 0); }
 		int currentHealth() { return (health); }
 		bool damage(int x)
