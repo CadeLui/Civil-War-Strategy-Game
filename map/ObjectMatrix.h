@@ -26,6 +26,10 @@ class ObjectMatrix
 		{
 			objectVector[r][c] = new ObjectHolder(newObj, newSym);
 		}
+		void emptySpot(int r, int c)
+		{
+			objectVector[r][c] = new ObjectHolder();
+		}
 		int pickAndPlace(int r1, int c1, int r2, int c2)
 		{
 			if (objectVector[r2][c2]->getObject() != nullptr) return 1;
