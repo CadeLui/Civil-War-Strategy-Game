@@ -28,9 +28,9 @@ class ObjectMatrix
 		}
 		int pickAndPlace(int r1, int c1, int r2, int c2)
 		{
-			if (!objectVector[r2][c2]->getObject()) return 1;
+			if (objectVector[r2][c2]->getObject() != nullptr) return 1;
 			objectVector[r2][c2] = objectVector[r1][c1];
-			objectVector[r1][c2] = new ObjectHolder();
+			objectVector[r1][c1] = new ObjectHolder();
 			return 0;
 		}
 		std::string toString()
