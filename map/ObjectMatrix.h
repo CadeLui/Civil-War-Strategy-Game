@@ -37,6 +37,14 @@ class ObjectMatrix
 			objectVector[r1][c1] = new ObjectHolder();
 			return 0;
 		}
+		int swapObject(int r1, int c1, int r2, int c2)
+		{
+			if (objectVector[r2][c2]->getObject() == nullptr) return 1;
+			ObjectHolder* tempObj = objectVector[r2][c2];
+			objectVector[r2][c2] = objectVector[r1][c1];
+			objectVector[r1][c1] = tempObj;
+			return 0;
+		}
 		std::string toString()
 		{
 			std::string output;
