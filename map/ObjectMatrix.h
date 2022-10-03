@@ -9,6 +9,7 @@ class ObjectMatrix
 {
 	private:
 		std::vector<std::vector<ObjectHolder*>> objectVector;
+		std::string alphabet[26] = {"a", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 	public:
 		ObjectMatrix(int rows, int cols)
 		{
@@ -47,11 +48,16 @@ class ObjectMatrix
 		}
 		std::string toString()
 		{
-			std::string output;
+			std::string output = "  | ";
+			for (int c = 0; c < objectVector[0].size(); c++)
+			{
+				output += alphabet[c] + " ";
+			} output += "|\n";
+
 			for (int r = 0; r < objectVector.size(); r++)
 			{
-				output += "| ";
-				for (int c = 0; c < objectVector.size(); c++)
+				output += std::to_string(r) + " | ";
+				for (int c = 0; c < objectVector[r].size(); c++)
 				{
 					output += objectVector[r][c]->getSymbol() + " ";
 				}
