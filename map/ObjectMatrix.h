@@ -9,7 +9,10 @@ class ObjectMatrix
 {
 	private:
 		std::vector<std::vector<ObjectHolder*>> objectVector;
-		std::string alphabet[26] = {"a", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+		std::string alphabet[26] = 
+			{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+			 "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
 	public:
 		ObjectMatrix(int rows, int cols)
 		{
@@ -23,14 +26,17 @@ class ObjectMatrix
 				}
 			}
 		}
+
 		void placeObject(void* newObj, std::string newSym, int r, int c)
 		{
 			objectVector[r][c] = new ObjectHolder(newObj, newSym);
 		}
+
 		void emptySpot(int r, int c)
 		{
 			objectVector[r][c] = new ObjectHolder();
 		}
+
 		int pickAndPlace(int r1, int c1, int r2, int c2)
 		{
 			if (objectVector[r2][c2]->getObject() != nullptr) return 1;
@@ -38,6 +44,7 @@ class ObjectMatrix
 			objectVector[r1][c1] = new ObjectHolder();
 			return 0;
 		}
+
 		int swapObject(int r1, int c1, int r2, int c2)
 		{
 			if (objectVector[r2][c2]->getObject() == nullptr) return 1;
@@ -46,6 +53,7 @@ class ObjectMatrix
 			objectVector[r1][c1] = tempObj;
 			return 0;
 		}
+
 		std::string toString()
 		{
 			std::string output = "  | ";
