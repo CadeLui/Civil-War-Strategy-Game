@@ -56,7 +56,7 @@ class ObjectMatrix
 
 		std::string toString()
 		{
-			std::string output = "  | ";
+			std::string output = "   | ";
 			for (int c = 0; c < objectVector[0].size(); c++)
 			{
 				output += alphabet[c] + " ";
@@ -64,6 +64,7 @@ class ObjectMatrix
 
 			for (int r = 0; r < objectVector.size(); r++)
 			{
+				if (r < 10) output += "0";
 				output += std::to_string(r) + " | ";
 				for (int c = 0; c < objectVector[r].size(); c++)
 				{
