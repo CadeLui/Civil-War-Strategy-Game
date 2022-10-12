@@ -1,2 +1,2 @@
 # Civil-War-Strategy-Game
-A simple strategy based off of a quarterly project for my United States of America History class
+A strategy game based loosely on a board game a friend and I made centered on the US Civil War.
