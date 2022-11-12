@@ -1,7 +1,7 @@
 #pragma once
 #include "Unit.h"
 
-class Cannon: protected Unit
+class Cannon: private Unit
 {
     private:
         Unit* containedUnit;
