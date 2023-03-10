@@ -39,8 +39,8 @@ class ObjectMatrix
 
 		int pickAndPlace(int r1, int c1, int r2, int c2)
 		{
-			if (objectVector[r1][c1]->getObject() == nullptr) return 1;
-			if (objectVector[r2][c2]->getObject() != nullptr) return 1;
+			if (objectVector[r1][c1]->containedObject == nullptr) return 1;
+			if (objectVector[r2][c2]->containedObject != nullptr) return 1;
 			objectVector[r2][c2] = objectVector[r1][c1];
 			objectVector[r1][c1] = new ObjectHolder();
 			return 0;
@@ -48,7 +48,7 @@ class ObjectMatrix
 
 		int swapObject(int r1, int c1, int r2, int c2)
 		{
-			if (objectVector[r1][c1]->getObject() == nullptr) return 1;
+			if (objectVector[r1][c1]->containedObject == nullptr) return 1;
 			ObjectHolder* tempObj = objectVector[r2][c2];
 			objectVector[r2][c2] = objectVector[r1][c1];
 			objectVector[r1][c1] = tempObj;
@@ -57,8 +57,8 @@ class ObjectMatrix
 
 		int pushObject(int row, int col, int down, int right)
 		{
-			if (objectVector[row][col]->getObject() == nullptr ||
-				objectVector[row+down][col+right]->getObject() != nullptr) return 1;
+			if (objectVector[row][col]->containedObject == nullptr ||
+				objectVector[row+down][col+right]->containedObject != nullptr) return 1;
 			objectVector[row+down][col+right] = objectVector[row][col];
 			objectVector[row][col] = new ObjectHolder();
 			return 0;
@@ -78,7 +78,7 @@ class ObjectMatrix
 				output += std::to_string(r) + " | ";
 				for (int c = 0; c < objectVector[r].size(); c++)
 				{
-					output += objectVector[r][c]->getSymbol() + " ";
+					output += objectVector[r][c]->symbol + " ";
 				}
 				output += "|\n";
 			}
